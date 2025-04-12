@@ -15,7 +15,7 @@ def play():
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill("black")
+        SCREEN.blit(BG, (0,0))
 
         PLAY_TEXT = def_font(45).render("This is the PLAY screen.", True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
@@ -41,14 +41,14 @@ def options():
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill("white")
+        SCREEN.blit(BG, (0,0))
 
-        OPTIONS_TEXT = def_font(45).render("This is the OPTIONS screen.", True, "Black")
+        OPTIONS_TEXT = def_font(45).render("This is the OPTIONS screen.", True, "WHite")
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
         OPTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=def_font(75), base_color="Black", hovering_color="Green")
+                            text_input="BACK", font=def_font(75), base_color="White", hovering_color="Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
