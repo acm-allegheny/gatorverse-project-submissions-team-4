@@ -12,7 +12,7 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("pictures/background.png")
+BG = pygame.image.load("pictures/background.jpg")
 
 with open("questions/questions.json", "r") as file:
     questions = json.load(file)
@@ -77,7 +77,7 @@ def play():
 
         # Back Button
         PLAY_BACK = Button(image=None, pos=(640, 600), 
-                            text_input="BACK", font=def_font(75), base_color="White", hovering_color="Green")
+                            text_input="BACK", font=def_font(75), base_color="White", hovering_color="Blue")
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
@@ -125,7 +125,7 @@ def options():
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
         OPTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=def_font(75), base_color="White", hovering_color="Green")
+                            text_input="BACK", font=def_font(75), base_color="White", hovering_color="Blue")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
@@ -148,15 +148,15 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = def_font(100).render("MAIN MENU", True, "#b68f40")
+        MENU_TEXT = def_font(90).render("On the Plane", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
         PLAY_BUTTON = Button(image=pygame.image.load("pictures/rectang.png"), pos=(640, 250), 
-                            text_input="PLAY", font=def_font(75), base_color="#d7fcd4", hovering_color="White")
+                            text_input="PLAY", font=def_font(75), base_color="#5da2cf", hovering_color="White")
         OPTIONS_BUTTON = Button(image=pygame.image.load("pictures/options.png"), pos=(640, 400), 
-                            text_input="OPTIONS", font=def_font(75), base_color="#d7fcd4", hovering_color="White")
+                            text_input="OPTIONS", font=def_font(75), base_color="#5da2cf", hovering_color="White")
         QUIT_BUTTON = Button(image=pygame.image.load("pictures/quit.png"), pos=(640, 550), 
-                            text_input="QUIT", font=def_font(75), base_color="#d7fcd4", hovering_color="White")
+                            text_input="QUIT", font=def_font(75), base_color="#5da2cf", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
