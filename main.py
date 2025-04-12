@@ -1,4 +1,6 @@
-import pygame, sys
+import sys
+
+import pygame
 from button import Button
 
 pygame.init()
@@ -6,12 +8,16 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("pictures/background.png")
+BG = pygame.image.load("pictures/background.png.jpg")
+
 
 def def_font(size):
+    """Load a font from the specified path and size."""
     return pygame.font.Font("font/font.ttf", size)
 
+
 def play():
+    """Display the play screen."""
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -36,8 +42,10 @@ def play():
                     main_menu()
 
         pygame.display.update()
-    
+
+
 def options():
+    """Display the options screen."""
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -63,7 +71,9 @@ def options():
 
         pygame.display.update()
 
+
 def main_menu():
+    """Display the main menu."""
     while True:
         SCREEN.blit(BG, (0, 0))
 
@@ -99,5 +109,6 @@ def main_menu():
                     sys.exit()
 
         pygame.display.update()
+
 
 main_menu()
