@@ -154,7 +154,7 @@ def main_menu():
         PLAY_BUTTON = Button(image=pygame.image.load("pictures/rectang.png"), pos=(640, 250), 
                             text_input="PLAY", font=def_font(75), base_color="#5da2cf", hovering_color="White")
         OPTIONS_BUTTON = Button(image=pygame.image.load("pictures/options.png"), pos=(640, 400), 
-                            text_input="OPTIONS", font=def_font(75), base_color="#5da2cf", hovering_color="White")
+                            text_input="HOW TO", font=def_font(75), base_color="#5da2cf", hovering_color="White")
         QUIT_BUTTON = Button(image=pygame.image.load("pictures/quit.png"), pos=(640, 550), 
                             text_input="QUIT", font=def_font(75), base_color="#5da2cf", hovering_color="White")
 
@@ -180,4 +180,23 @@ def main_menu():
         pygame.display.update()
 
 
-main_menu()
+def start_screen():
+    """Display the start screen."""
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        START_TEXT = def_font(90).render("On the Plane", True, "#b68f40")
+        START_RECT = START_TEXT.get_rect(center=(640, 200))
+        CLICK_TO = def_font(45).render("Click to start", True, "White")
+        CLICK_RECT = CLICK_TO.get_rect(center=(640, 400))
+
+        SCREEN.blit(START_TEXT, START_RECT)
+        SCREEN.blit(CLICK_TO, CLICK_RECT)
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main_menu()
+        pygame.display.update()
+
+
+start_screen()
