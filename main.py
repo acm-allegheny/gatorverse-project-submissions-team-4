@@ -53,8 +53,14 @@ def play():
         SCREEN.blit(BG, (0,0))
 
         # Render question
-        question_surf = def_font(40).render(question, True, "White")
-        SCREEN.blit(question_surf, (SCREEN.get_width() // 2 - question_surf.get_width() // 2, 200))
+        wrapped_lines = display_text(question, def_font(40), 1000)  # 1000px max width
+        y_offset = 150
+        
+        for line in wrapped_lines:
+            line_surf = def_font(40).render(line, True, "White")
+            line_rect = line_surf.get_rect(center=(SCREEN.get_width() // 2, y_offset))
+            SCREEN.blit(line_surf, line_rect)
+            y_offset += 50
 
         # Render input box
         txt_surface = def_font(30).render(input_text, True, color)
