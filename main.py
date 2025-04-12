@@ -1,5 +1,7 @@
 import pygame, sys
 from button import Button
+import json 
+import random
 
 pygame.init()
 
@@ -7,6 +9,9 @@ SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("pictures/background.png")
+
+with open("questions/questions.json", "r") as file:
+    questions = json.load(file)
 
 def def_font(size):
     return pygame.font.Font("font/font.ttf", size)
@@ -19,18 +24,20 @@ def play():
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
 
-    question = "What is the capital of France?"
+    # Pick a random question
+    current_q = random.choice(questions)
+    question = current_q["question"]
+    correct_answer = current_q["answer"].lower()
 
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
         SCREEN.blit(BG, (0,0))
 
-        # Question Text
+        # Render question
         question_surf = def_font(40).render(question, True, "White")
         SCREEN.blit(question_surf, (SCREEN.get_width() // 2 - question_surf.get_width() // 2, 200))
 
-        # Draw input box
+        # Render input box
         txt_surface = def_font(30).render(input_text, True, color)
         width = max(400, txt_surface.get_width() + 10)
         input_box.w = width
@@ -48,7 +55,6 @@ def play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # If user clicked on input_box
                 if input_box.collidepoint(event.pos):
                     active = not active
                 else:
@@ -60,8 +66,14 @@ def play():
 
             if event.type == pygame.KEYDOWN and active:
                 if event.key == pygame.K_RETURN:
-                    print(f"User answered: {input_text}")
-                    input_text = ""  # Clear after submission
+                    if input_text.lower().strip() == correct_answer:
+                        print("Correct!")
+                    else:
+                        print(f"Wrong. Correct answer: {correct_answer}")
+                    input_text = ""
+                    current_q = random.choice(questions)
+                    question = current_q["question"]
+                    correct_answer = current_q["answer"].lower()
                 elif event.key == pygame.K_BACKSPACE:
                     input_text = input_text[:-1]
                 else:
