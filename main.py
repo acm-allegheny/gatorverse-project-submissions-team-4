@@ -12,18 +12,34 @@ def def_font(size):
     return pygame.font.Font("font/font.ttf", size)
 
 def play():
+    input_text = ""
+    active = False
+    input_box = pygame.Rect(440, 320, 400, 50)
+    color_inactive = pygame.Color('lightskyblue3')
+    color_active = pygame.Color('dodgerblue2')
+    color = color_inactive
+
+    question = "What is the capital of France?"
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
         SCREEN.blit(BG, (0,0))
 
-        PLAY_TEXT = def_font(45).render("This is the PLAY screen.", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        # Question Text
+        question_surf = def_font(40).render(question, True, "White")
+        SCREEN.blit(question_surf, (SCREEN.get_width() // 2 - question_surf.get_width() // 2, 200))
 
-        PLAY_BACK = Button(image=None, pos=(640, 460), 
+        # Draw input box
+        txt_surface = def_font(30).render(input_text, True, color)
+        width = max(400, txt_surface.get_width() + 10)
+        input_box.w = width
+        pygame.draw.rect(SCREEN, color, input_box, 2)
+        SCREEN.blit(txt_surface, (input_box.x + 5, input_box.y + 10))
+
+        # Back Button
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
                             text_input="BACK", font=def_font(75), base_color="White", hovering_color="Green")
-
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
@@ -32,8 +48,24 @@ def play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                # If user clicked on input_box
+                if input_box.collidepoint(event.pos):
+                    active = not active
+                else:
+                    active = False
+                color = color_active if active else color_inactive
+
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
+
+            if event.type == pygame.KEYDOWN and active:
+                if event.key == pygame.K_RETURN:
+                    print(f"User answered: {input_text}")
+                    input_text = ""  # Clear after submission
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                else:
+                    input_text += event.unicode
 
         pygame.display.update()
     
