@@ -4,34 +4,80 @@ import sys
 
 import pygame
 from button import Button
+import json 
+import random
 
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("pictures/background.jpg")
+BG = pygame.image.load("pictures/background.png")
 
+with open("questions/questions.json", "r") as file:
+    questions = json.load(file)
 
 def def_font(size):
     """Load a font from the specified path and size."""
     return pygame.font.Font("font/font.ttf", size)
 
+def display_text(text, font, max_width):
+    """Displaying text correctly, so the user can see it on the screen"""
+    words = text.split(' ')
+    lines = []
+    current_line = ""
+
+    for w in words:
+        test_line = current_line + w + " "
+        
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line.strip())
+            current_line = w + " "
+    
+    lines.append(current_line.strip())
+    return lines
+
 
 def play():
     """Display the play screen."""
+    input_text = ""
+    active = False
+    input_box = pygame.Rect(440, 320, 400, 50)
+    color_inactive = pygame.Color('lightskyblue3')
+    color_active = pygame.Color('dodgerblue2')
+    color = color_inactive
+
+    # Pick a random question
+    current_q = random.choice(questions)
+    question = current_q["question"]
+    correct_answer = current_q["answer"].lower()
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
         SCREEN.blit(BG, (0,0))
 
-        PLAY_TEXT = def_font(45).render("This is the PLAY screen.", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        # Render question
+        wrapped_lines = display_text(question, def_font(40), 1000)  # 1000px max width
+        y_offset = 150
+        
+        for line in wrapped_lines:
+            line_surf = def_font(40).render(line, True, "White")
+            line_rect = line_surf.get_rect(center=(SCREEN.get_width() // 2, y_offset))
+            SCREEN.blit(line_surf, line_rect)
+            y_offset += 50
 
-        PLAY_BACK = Button(image=None, pos=(640, 460), 
+        # Render input box
+        txt_surface = def_font(30).render(input_text, True, color)
+        width = max(400, txt_surface.get_width() + 10)
+        input_box.w = width
+        pygame.draw.rect(SCREEN, color, input_box, 2)
+        SCREEN.blit(txt_surface, (input_box.x + 5, input_box.y + 10))
+
+        # Back Button
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
                             text_input="BACK", font=def_font(75), base_color="White", hovering_color="Green")
-
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
@@ -40,8 +86,29 @@ def play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_box.collidepoint(event.pos):
+                    active = not active
+                else:
+                    active = False
+                color = color_active if active else color_inactive
+
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
+
+            if event.type == pygame.KEYDOWN and active:
+                if event.key == pygame.K_RETURN:
+                    if input_text.lower().strip() == correct_answer:
+                        print("Correct!")
+                    else:
+                        print(f"Wrong. Correct answer: {correct_answer}")
+                    input_text = ""
+                    current_q = random.choice(questions)
+                    question = current_q["question"]
+                    correct_answer = current_q["answer"].lower()
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                else:
+                    input_text += event.unicode
 
         pygame.display.update()
 
