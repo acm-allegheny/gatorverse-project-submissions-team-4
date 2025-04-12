@@ -16,6 +16,25 @@ with open("questions/questions.json", "r") as file:
 def def_font(size):
     return pygame.font.Font("font/font.ttf", size)
 
+def display_text(text, font, max_width):
+    """Displaying text correctly, so the user can see it on the screen"""
+    words = text.split(' ')
+    lines = []
+    current_line = ""
+
+    for w in words:
+        test_line = current_line + w + " "
+        
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line.strip())
+            current_line = w + " "
+    
+    lines.append(current_line.strip())
+    return lines
+
+
 def play():
     input_text = ""
     active = False
