@@ -113,6 +113,12 @@ def play():
         pygame.display.update()
 
 
+def questions_remarks_good():
+    
+
+def questions_remarks_bad():
+
+
 def options():
     """Display the options screen."""
     while True:
@@ -141,6 +147,35 @@ def options():
         pygame.display.update()
 
 
+def select():
+    """Display the select screen."""
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        SELECT_MOUSE_POS = pygame.mouse.get_pos()
+
+        SELECT_TEXT = def_font(90).render("Select", True, "#b68f40")
+        SELECT_RECT = SELECT_TEXT.get_rect(center=(640, 100))
+
+        TRIVIA_BUTTON = Button(image=pygame.image.load("pictures/rectang.png"), pos=(640, 250), 
+                            text_input="STREETSMART BONANZA", font=def_font(30), base_color="#5da2cf", hovering_color="White")
+        CONVERT_BUTTON = Button(image=pygame.image.load("pictures/options.png"), pos=(640, 400), 
+                            text_input="METRIC MANIA", font=def_font(30), base_color="#5da2cf", hovering_color="White")
+        SCREEN.blit(SELECT_TEXT, SELECT_RECT)
+
+        for button in [TRIVIA_BUTTON, CONVERT_BUTTON]:
+            button.changeColor(SELECT_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if TRIVIA_BUTTON.checkForInput(SELECT_MOUSE_POS):
+                    play()
+                if CONVERT_BUTTON.checkForInput(SELECT_MOUSE_POS):
+                    options()
+
+
+        pygame.display.update()
 def main_menu():
     """Display the main menu."""
     while True:
@@ -170,7 +205,7 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    play()
+                    select()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
