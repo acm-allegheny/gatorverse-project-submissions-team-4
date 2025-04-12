@@ -1,3 +1,5 @@
+"""Gatorverse Main Display for On the Plane."""
+
 import sys
 
 import pygame
@@ -8,7 +10,7 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("pictures/background.png.jpg")
+BG = pygame.image.load("pictures/background.jpg")
 
 
 def def_font(size):
