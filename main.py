@@ -1,6 +1,7 @@
 """Gatorverse Main Display for On the Plane."""
 
 import sys
+import time
 
 import pygame
 from button import Button
@@ -38,6 +39,24 @@ def display_text(text, font, max_width):
     
     lines.append(current_line.strip())
     return lines
+
+
+def gameover():
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        OVER_TEXT = def_font(90).render("GAME OVER", True, "Red")
+        OVER_RECT = OVER_TEXT.get_rect(center=(640, 200))
+        CLIC_TO = def_font(45).render("Click to restart", True, "White")
+        CLIC_RECT = CLIC_TO.get_rect(center=(640, 400))
+
+        SCREEN.blit(OVER_TEXT, OVER_RECT)
+        SCREEN.blit(CLIC_TO, CLIC_RECT)
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main_menu()
+        pygame.display.update()
 
 
 def play():
@@ -81,6 +100,34 @@ def play():
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
+        def questions_remarks_good():
+            start_time = time.time()
+            while time.time() - start_time < 3:  # Run for 3 seconds
+                SCREEN.blit(BG, (0, 0))  # Redraw the background to prevent overlapping
+                remarks_good_text = def_font(40).render("Correct!", True, "Green")
+                remarks_good_rect = remarks_good_text.get_rect(center=(640, 300))
+                SCREEN.blit(remarks_good_text, remarks_good_rect)
+                pygame.display.update()
+                pygame.time.delay(500)  # Delay for half a second to create a flashing effect
+                SCREEN.blit(BG, (0, 0))  # Clear the text
+                pygame.display.update()
+                pygame.time.delay(300)
+
+        def questions_remarks_bad():
+            start_time = time.time()
+            while time.time() - start_time < 3:  # Run for 3 seconds
+                SCREEN.blit(BG, (0, 0))  # Redraw the background to prevent overlapping
+                remarks_bad_text = def_font(30).render(
+                    f"Wrong! Correct answer: {correct_answer}", True, "Red"
+                )
+                remarks_bad_rect = remarks_bad_text.get_rect(center=(640, 300))
+                SCREEN.blit(remarks_bad_text, remarks_bad_rect)
+                pygame.display.update()
+                pygame.time.delay(500)  # Delay for half a second to create a flashing effect
+                SCREEN.blit(BG, (0, 0))  # Clear the text
+                pygame.display.update()
+                pygame.time.delay(300)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -98,9 +145,12 @@ def play():
             if event.type == pygame.KEYDOWN and active:
                 if event.key == pygame.K_RETURN:
                     if input_text.lower().strip() == correct_answer:
-                        print("Correct!")
+                        questions_remarks_good()
+
                     else:
-                        print(f"Wrong. Correct answer: {correct_answer}")
+                        questions_remarks_bad()
+                        gameover()
+                        
                     input_text = ""
                     current_q = random.choice(questions)
                     question = current_q["question"]
@@ -113,11 +163,22 @@ def play():
         pygame.display.update()
 
 
-# def questions_remarks_good():
-    
+def convert():
+    while True:
+        SCREEN.blit(BG, (0, 0))
 
-# def questions_remarks_bad():
+        CONVERT_TEXT = def_font(50).render("UNFINISHED GAMEMODE", True, "Blue")
+        CONVERT_RECT = CONVERT_TEXT.get_rect(center=(640, 200))
+        CONVERT_TO = def_font(45).render("Click to go back!", True, "White")
+        CONVERT_RECT = CONVERT_TO.get_rect(center=(640, 400))
 
+        SCREEN.blit(CONVERT_TEXT, CONVERT_RECT)
+        SCREEN.blit(CONVERT_TO, CONVERT_RECT)
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main_menu()
+        pygame.display.update()
 
 def options():
     """Display the options screen."""
@@ -196,10 +257,12 @@ def select():
                 if TRIVIA_BUTTON.checkForInput(SELECT_MOUSE_POS):
                     play()
                 if CONVERT_BUTTON.checkForInput(SELECT_MOUSE_POS):
-                    options()
+                    convert()
 
 
         pygame.display.update()
+
+
 def main_menu():
     """Display the main menu."""
     while True:
