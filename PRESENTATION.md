@@ -1,4 +1,4 @@
-# On the Plane
+# On the Plane 
 
 ## Purpose
 
@@ -16,3 +16,7 @@ HTTPX / Requests
 Gamified learning focused on real-world travel scenarios.
 Destination-based questions that personalize every session
 Fully offline – perfect for flights or places with no internet.
+
+## Slides
+
+<https://drive.google.com/file/d/1dOs8TBsdv6M9o1v_p9jqgJeC6GXOnCzS/view?usp=sharing>
