@@ -130,9 +130,29 @@ def options():
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        HOW_TEXT = def_font(45).render("How to Play.", True, "WHite")
-        HOW_RECT = HOW_TEXT.get_rect(center=(640, 100))
+        HOW_TEXT = def_font(30).render("On the Plane gives users two options", True, "WHite")
+        HOW_RECT = HOW_TEXT.get_rect(center=(640, 150))
         SCREEN.blit(HOW_TEXT, HOW_RECT)
+
+        TO_TEXT = def_font(30).render("of gameplay. Metric Mania and", True, "WHite")
+        TO_RECT = TO_TEXT.get_rect(center=(640, 200))
+        SCREEN.blit(TO_TEXT, TO_RECT)
+
+        PLAY_TEXT = def_font(30).render("Trivia Bonanza. Each gameplay encourages", True, "WHite")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 250))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLA_TEXT = def_font(30).render("users to put in the correct input!", True, "WHite")
+        PLA_RECT = PLA_TEXT.get_rect(center=(640, 300))
+        SCREEN.blit(PLA_TEXT, PLA_RECT)
+
+        PL_TEXT = def_font(30).render("Correct answers warrent a continuous", True, "WHite")
+        PL_RECT = PL_TEXT.get_rect(center=(640, 400))
+        SCREEN.blit(PL_TEXT, PL_RECT)
+
+        P_TEXT = def_font(30).render("play while wrong answers end the game!!", True, "WHite")
+        P_RECT = P_TEXT.get_rect(center=(640, 450))
+        SCREEN.blit(P_TEXT, P_RECT)
 
         OPTIONS_BACK = Button(image=None, pos=(640, 600), 
                             text_input="BACK", font=def_font(75), base_color="White", hovering_color="Blue")
