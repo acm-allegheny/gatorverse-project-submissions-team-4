@@ -113,10 +113,10 @@ def play():
         pygame.display.update()
 
 
-def questions_remarks_good():
+# def questions_remarks_good():
     
 
-def questions_remarks_bad():
+# def questions_remarks_bad():
 
 
 def options():
@@ -126,11 +126,15 @@ def options():
 
         SCREEN.blit(BG, (0,0))
 
-        OPTIONS_TEXT = def_font(45).render("This is the OPTIONS screen.", True, "WHite")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
+        OPTIONS_TEXT = def_font(45).render("How to Play.", True, "WHite")
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        OPTIONS_BACK = Button(image=None, pos=(640, 460), 
+        HOW_TEXT = def_font(45).render("How to Play.", True, "WHite")
+        HOW_RECT = HOW_TEXT.get_rect(center=(640, 100))
+        SCREEN.blit(HOW_TEXT, HOW_RECT)
+
+        OPTIONS_BACK = Button(image=None, pos=(640, 600), 
                             text_input="BACK", font=def_font(75), base_color="White", hovering_color="Blue")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
